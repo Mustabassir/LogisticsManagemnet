@@ -1,0 +1,24 @@
+﻿@model LogiticsManagment.ViewModels.OrderViewModel
+@{
+    ViewBag.Title = "OrderDetail";
+}
+
+<h2>OrderDetail</h2>
+<div>
+    @using (Html.BeginForm("OrderDetail", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <h3>Order Information</h3>
+            <label for="Id">Order Id</label>
+            @Html.TextBoxFor(m => m.Customer.customer_name, new { @class = "form-control" })
+            <label for="Date">Date</label>
+            @Html.TextBoxFor(m => m.Customer.address, new { @class = "form-control" })
+            <label for="Delivery Charges">Email</label>
+            @Html.TextBoxFor(m => m.Customer.email, new { @class = "form-control" })
+            <label for="Staus">Status</label>
+            @Html.TextBoxFor(m => m.Customer.phone_number, new { @class = "form-control" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+    </div>

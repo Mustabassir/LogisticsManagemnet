@@ -1,0 +1,72 @@
+﻿@model IEnumerable<LogiticsManagment.Models.Route>
+
+@{
+    ViewBag.Title = "ListRoutes";
+}
+
+<h2>ListRoutes</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <!-- Search Input -->
+        <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+    </div>
+
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Route ID</th>
+            <th>Route Link</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var route in Model)
+        {
+            <tr>
+                <td>@route.route_id</td>
+                <td>
+                    <span title="@route.route_link">
+                        @if (route.route_link != null)
+                        {
+                            @Html.Raw(route.route_link.Length > 30 ? route.route_link.Substring(0, 30) + "..." : route.route_link)
+                        }
+                    </span>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = route.route_id }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = route.route_id }, new { @class = "btn btn-danger btn-sm" })
+                    <a href="@route.route_link" class="btn btn-info btn-sm view-full-link" target="_blank">View Full</a>
+                    @Html.ActionLink("AssignRoute", "AssignRoute", new { id = route.route_id }, new { @class = "btn btn-secondary btn-sm" })
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<div class="col-md-6 text-right">
+    <!-- Add New Route Button -->
+    <button id="addNewRoute" class="btn btn-primary">Add New Route</button>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Click event for Add New Route button
+            $('#addNewRoute').click(function () {
+                // Navigate to controller action for adding a new route
+                window.location.href = '@Url.Action("AddRoute", "Route")';
+            });
+
+            // Filter table rows based on search input
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('table tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+}

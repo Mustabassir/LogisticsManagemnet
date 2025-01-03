@@ -1,0 +1,68 @@
+﻿@model LogiticsManagment.ViewModels.OrderViewModel
+
+@{
+    ViewData["Title"] = "CustomerDetail";
+}
+
+<main>
+    <div class="container">
+        <h2>Create Order</h2>
+        @using (Html.BeginForm("CustomerDetail", "Home", FormMethod.Post, new { id = "orderForm" }))
+        {
+            <div class="form-group">
+                <h3>Customer Information</h3>
+                <label for="CustomerName">Name</label>
+                @Html.TextBoxFor(m => m.Customer.customer_name, new { @class = "form-control" })
+
+                <label for="StreetAddress">Street Address</label>
+                <input type="text" id="StreetAddress" class="form-control" />
+
+                <label for="City">City</label>
+                <input type="text" id="City" class="form-control" />
+
+                <label for="State">State</label>
+                <input type="text" id="State" class="form-control" />
+
+                <label for="ZipCode">ZIP Code</label>
+                <input type="text" id="ZipCode" class="form-control" />
+
+                <!-- Hidden input for address -->
+                @Html.HiddenFor(m => m.Customer.address, new { @id = "Address", @class = "form-control" })
+
+                <label for="email">Email</label>
+                @Html.TextBoxFor(m => m.Customer.email, new { @class = "form-control" })
+
+                <label for="tel">Phone Number</label>
+                @Html.TextBoxFor(m => m.Customer.phone_number, new { @class = "form-control" })
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+        }
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        // Wait for the document to be fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add event listener to form submit
+            document.getElementById('orderForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission behavior
+
+                // Combine the address parts
+                var streetAddress = document.getElementById('StreetAddress').value;
+                var city = document.getElementById('City').value;
+                var state = document.getElementById('State').value;
+                var zipCode = document.getElementById('ZipCode').value;
+                var fullAddress = streetAddress + ', ' + city + ', ' + state + ' ' + zipCode;
+
+                // Set the hidden input value
+                document.getElementById('Address').value = fullAddress;
+
+                // Submit the form
+                this.submit(); // 'this' refers to the form element
+            });
+        });
+    </script>
+}

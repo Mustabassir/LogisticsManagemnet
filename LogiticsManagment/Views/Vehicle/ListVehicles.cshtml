@@ -1,0 +1,58 @@
+﻿@model IEnumerable<LogiticsManagment.Models.Vehicle>
+
+@{
+    ViewBag.Title = "List Of Vehicles";
+}
+
+<h2>List Of Vehicles</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+    </div>
+</div>
+
+<table id="vehicleTable" class="table">
+    <thead>
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Vehicle Number</th>
+            <th>Status</th>
+            <th>City</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vehicle in Model)
+        {
+            <tr>
+                <td>@vehicle.vehicle_id</td>
+                <td>@vehicle.vehicle_number</td>
+                <td>@vehicle.status</td>
+                <td>@vehicle.vehicle_city_name</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditVehicle", new { id = vehicle.vehicle_id }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "DeleteVehicle", new { id = vehicle.vehicle_id }, new { @class = "btn btn-danger btn-sm" })
+                    @Html.ActionLink("Details", "DetailsVehicle", new { id = vehicle.vehicle_id }, new { @class = "btn btn-info btn-sm" })
+                    @Html.ActionLink("Route", "VehicleRoute", new { id = vehicle.vehicle_id }, new { @class = "btn btn-info btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="col-md-6">
+    @Html.ActionLink("Add New Vehicle", "AddVehicle", null, new { @class = "btn btn-primary" })
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#vehicleTable tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

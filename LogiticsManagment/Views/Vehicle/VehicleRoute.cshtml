@@ -1,0 +1,39 @@
+﻿@model IEnumerable<LogiticsManagment.Models.VehicleRoute>
+
+@{
+    ViewBag.Title = "Vehicle Route";
+}
+
+<h2>Vehicle Route</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Vehicle Route ID</th>
+            <th>Vehicle ID</th>
+            <th>Route ID</th>
+            <th>Assignment Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var route in Model)
+        {
+            <tr>
+                <td>@route.vehicle_route_id</td>
+                <td>@route.vehicle_id</td>
+                <td>@route.route_id</td>
+                <td>@route.assignment_date.ToShortDateString()</td>
+                <td>
+                    @using (Html.BeginForm("RemoveRoute", "Vehicle", FormMethod.Post))
+                    {
+                        @Html.Hidden("id", route.vehicle_route_id)
+                        <input type="submit" value="Remove" class="btn btn-danger btn-sm" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Back to Vehicle List", "ListVehicles", "Vehicle", new { @class = "btn btn-primary" })

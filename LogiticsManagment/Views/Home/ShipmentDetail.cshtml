@@ -1,0 +1,62 @@
+﻿@model LogiticsManagment.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "ShipmentDetail";
+}
+
+<h2>ShipmentDetail</h2>
+
+<div>
+    @using (Html.BeginForm("ShipmentDetail", "Home", FormMethod.Post, new { id = "shipmentForm" }))
+    {
+        <div class="form-group">
+            <h3>Shipment Information</h3>
+
+            <h4>Destination Address</h4>
+            <label for="Street">Street</label>
+            @Html.TextBox("Street", null, new { @class = "form-control", id = "Street" })
+
+            <label for="City">City</label>
+            @Html.TextBoxFor(m => m.Shipment.destination_city_name, new { @class = "form-control", id = "City" })
+            <label for="State">State</label>
+            @Html.TextBox("State", null, new { @class = "form-control", id = "State" })
+
+            <label for="PostalCode">Postal Code</label>
+            @Html.TextBox("PostalCode", null, new { @class = "form-control", id = "PostalCode" })
+
+            @Html.HiddenFor(m => m.Shipment.destination_address, new { id = "DestinationAddress" })
+
+            <label for="shipment_date">Shipment Date</label>
+q
+            <label for="status">Status</label>
+            @Html.DropDownListFor(m => m.Shipment.Status, new SelectList(new List<string> { "Pending", "Local Warehouse", "To Airport", "In Destination City Warehouse", "Out for Delivery", "Delivered" }), new { @class = "form-control" })
+
+            <label for="city">Current City</label>
+            @Html.TextBoxFor(m => m.Shipment.source_city_name, new { @class = "form-control" })
+
+            <label for="delivery_method">Delivery Method</label>
+            @Html.DropDownListFor(m => m.Shipment.delivery_method, new SelectList(new List<string> { "Express", "Standard", "IntracityStandard", "IntracityExpress" }), new { @class = "form-control" })
+        </div>
+
+        <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function () {
+            // Combine the address parts
+            var street = document.getElementById('Street').value;
+            var city = document.getElementById('City').value;
+            var state = document.getElementById('State').value;
+            var postalCode = document.getElementById('PostalCode').value;
+            var fullAddress = street + ', ' + city + ', ' + state + ' ' + postalCode;
+
+            // Set the hidden input value
+            document.getElementById('DestinationAddress').value = fullAddress;
+
+            // Submit the form
+            document.getElementById('shipmentForm').submit();
+        });
+    </script>
+}

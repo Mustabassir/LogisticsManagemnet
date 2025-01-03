@@ -1,0 +1,51 @@
+﻿@model LogiticsManagment.ViewModels.WarehouseViewModel
+
+@{
+    ViewBag.Title = "Add Warehouse";
+}
+
+<h2>Add Warehouse</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Warehouse</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label for="WarehouseId" class="control-label col-md-2">Warehouse ID</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Warehouse.warehouse_id, new { htmlAttributes = new { @class = "form-control", id = "WarehouseId" } })
+                @Html.ValidationMessageFor(model => model.Warehouse.warehouse_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="WarehouseName" class="control-label col-md-2">Warehouse Name</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Warehouse.name, new { htmlAttributes = new { @class = "form-control", id = "WarehouseName" } })
+                @Html.ValidationMessageFor(model => model.Warehouse.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="WarehouseLocation" class="control-label col-md-2">Location</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Warehouse.location, new { htmlAttributes = new { @class = "form-control", id = "WarehouseLocation" } })
+                @Html.ValidationMessageFor(model => model.Warehouse.location, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="CityName" class="control-label col-md-2">City Name</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Warehouse.city_name, new { htmlAttributes = new { @class = "form-control", id = "CityName" } })
+                @Html.ValidationMessageFor(model => model.Warehouse.city_name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

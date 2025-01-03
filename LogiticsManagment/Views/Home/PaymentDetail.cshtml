@@ -1,0 +1,29 @@
+﻿@model LogiticsManagment.ViewModels.OrderViewModel
+@{
+    ViewBag.Title = "PaymentDetail";
+}
+
+<h2>Payment Detail</h2>
+
+<div>
+    @using (Html.BeginForm("PaymentDetail", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <h3>Payment Information</h3>
+
+            <label for="payment">Payment</label>
+            @Html.TextBoxFor(m => m.Payment.amount, new { @class = "form-control" })
+
+            <label for="PaymentMethod">Payment Method:</label>
+            @Html.DropDownListFor(m => m.Payment.payment_method, new SelectList(new[]
+            {
+                new SelectListItem { Text = "Card", Value = "Card" },
+                new SelectListItem { Text = "Cash", Value = "Cash" },
+                new SelectListItem { Text = "Online Transfer", Value = "Online Transfer" }
+            }, "Value", "Text"), "Select Payment Method", new { @class = "form-control", required = "required" })
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Payment</button>
+    }
+</div>

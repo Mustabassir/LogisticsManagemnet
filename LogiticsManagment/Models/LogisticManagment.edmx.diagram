@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4ce78185ebfb4d709334b9e10554ab0d" Name="Diagram1">
+        <EntityTypeShape EntityType="LogisticManagmentModel.City" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Customer" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Order" Width="1.5" PointX="1.5" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Package" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Payment" Width="1.5" PointX="3.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Rate" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Route" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Shipment" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.ShipmentVehicle" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.test" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Vehicle" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.VehicleRoute" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.Warehouse" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.warehouse_inventory" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Shipment__destin__756D6ECB" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Shipment__source__76619304" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Vehicle__vehicle__251C81ED" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Warehouse__city___74794A92" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Order__customer___72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Shipment__custom__1BC821DD" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Package__order_i__1332DBDC" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Payment__order_i__7F2BE32F" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__Shipment__packag__1AD3FDA4" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__warehouse__packa__17036CC0" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__VehicleRo__route__28ED12D1" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__ShipmentV__shipm__2BC97F7C" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__ShipmentV__vehic__2CBDA3B5" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK__VehicleRo__vehic__27F8EE98" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisticManagmentModel.FK_warehouse_id" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LogisticManagmentModel.admin" Width="1.5" PointX="7.375" PointY="6.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

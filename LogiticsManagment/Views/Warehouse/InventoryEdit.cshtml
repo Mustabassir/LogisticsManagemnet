@@ -1,0 +1,58 @@
+﻿@model LogiticsManagment.ViewModels.WarehouseViewModel
+
+@{
+    ViewBag.Title = "InventoryEdit";
+}
+
+<h2>Edit Warehouse Inventory</h2>
+
+@using (Html.BeginForm("InventoryEdit", "Warehouse",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Inventory Details</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.WarehouseInventory.package_id)
+
+    <div class="form-group">
+        <label for="Category" class="control-label col-md-2">Category</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.WarehouseInventory.category, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.WarehouseInventory.category, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Shelf Number" class="control-label col-md-2">Shelf Number</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.WarehouseInventory.shelf_no, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.WarehouseInventory.shelf_no, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Row Number" class="control-label col-md-2">Row Number</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.WarehouseInventory.row_no, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.WarehouseInventory.row_no, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Column Number" class="control-label col-md-2">Column Number</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.WarehouseInventory.column_no, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.WarehouseInventory.column_no, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+@section scripts {
+    <!-- Add any scripts here if needed -->
+}

@@ -1,0 +1,37 @@
+﻿@model LogiticsManagment.ViewModels.OrderViewModel
+@{
+    ViewBag.Title = "PackageDetail";
+}
+
+<h2>PackageDetail</h2>
+
+<div>
+    @using (Html.BeginForm("PackageDetail", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <h3>Order Information</h3>
+            <label for="Description">Description</label>
+            @Html.TextBoxFor(m => m.Package.description, new { @class = "form-control" })
+            <label for="Weight">Weight</label>
+            @Html.TextBoxFor(m => m.Package.weight, new { @class = "form-control" })
+            <label for="Length">Length</label>
+            @Html.TextBoxFor(m => m.Package.length, new { @class = "form-control" })
+
+            <label for="width">Width</label>
+            @Html.TextBoxFor(m => m.Package.width, new { @class = "form-control" })
+
+            <label for="Height">Height</label>
+            @Html.TextBoxFor(m => m.Package.height, new { @class = "form-control" })
+            <label for="Fragile">Fragile</label>
+            @Html.DropDownListFor(m => m.Package.fragile, new SelectList(new[]
+            {
+                new SelectListItem { Text = "Yes", Value = "true" },
+                new SelectListItem { Text = "No", Value = "false" }
+            }, "Value", "Text"), "Select Fragility", new { @class = "form-control" })
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+</div>
+

@@ -1,0 +1,60 @@
+﻿@model LogiticsManagment.Models.Vehicle
+
+@{
+    ViewBag.Title = "EditVehicle";
+}
+
+<h2>EditVehicle</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Vehicle</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="vehicle_id">Vehicle ID</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.vehicle_id, new { @readonly = "readonly", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.vehicle_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" for="vehicle_number">Vehicle Number</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.vehicle_number, new { @readonly = "readonly", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.vehicle_number, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Status</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.status, (SelectList)ViewBag.StatusList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">City</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.vehicle_city_name, (SelectList)ViewBag.CityList, "Select City", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.vehicle_city_name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ListVehicles")
+</div>

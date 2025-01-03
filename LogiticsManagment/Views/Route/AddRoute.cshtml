@@ -1,0 +1,23 @@
+﻿@model LogiticsManagment.Models.Route
+
+@{
+    ViewBag.Title = "AddRoute";
+}
+
+<h2>Add Route</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-group">
+    <label asp-for="route_link" class="control-label">Route Link</label>
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.route_link, new { htmlAttributes = new { @class = "form-control", id = "routeLink" } })
+        @Html.ValidationMessageFor(model => model.route_link, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+    <button type="submit" class="btn btn-primary">Add Route</button>
+}
+

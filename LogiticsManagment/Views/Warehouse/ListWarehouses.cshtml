@@ -1,0 +1,58 @@
+﻿@model IEnumerable<LogiticsManagment.ViewModels.WarehouseViewModel>
+
+@{
+    ViewBag.Title = "List of Warehouses";
+}
+
+<h2>List of Warehouses</h2>
+
+<div class="row mb-3">
+    
+    <div class="col-md-6">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+    </div>
+</div>
+
+<table id="warehouseTable" class="table">
+    <thead>
+        <tr>
+            <th>Warehouse ID</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>City Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var warehouseVM in Model)
+        {
+            <tr>
+                <td>@warehouseVM.Warehouse.warehouse_id</td>
+                <td>@warehouseVM.Warehouse.name</td>
+                <td>@warehouseVM.Warehouse.location</td>
+                <td>@warehouseVM.Warehouse.city_name</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditWarehouse", new { id = warehouseVM.Warehouse.warehouse_id }) |
+                    @Html.ActionLink("Delete", "DeleteWarehouse", new { id = warehouseVM.Warehouse.warehouse_id }) |
+                    @Html.ActionLink("Details", "Details", new { id = warehouseVM.Warehouse.warehouse_id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="col-md-6">
+    @Html.ActionLink("Add New Warehouse", "AddWarehouse", null, new { @class = "btn btn-primary" })
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#warehouseTable tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

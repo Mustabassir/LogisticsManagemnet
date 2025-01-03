@@ -1,0 +1,59 @@
+﻿@model IEnumerable<LogiticsManagment.ViewModels.OrdersViewModel>
+
+@{
+    ViewBag.Title = "List of Orders";
+}
+
+<h2>List of Orders</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+    </div>
+</div>
+
+<table id="orderTable" class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Customer ID</th>
+            <th>Status</th>
+            <th>Delivery Charges</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderVM in Model)
+        {
+            <tr>
+                <td>@orderVM.OrderID</td>
+                <td>@orderVM.OrderDate</td>
+                <td>@orderVM.CustomerID</td>
+                <td>@orderVM.Status</td>
+                <td>@orderVM.DeliveryCharges</td> <!-- Display as currency -->
+                <td>
+                    @Html.ActionLink("Edit", "EditOrder", new { id = orderVM.OrderID }) |
+                    @Html.ActionLink("Mark as Complete", "CompleteOrder", new { id = orderVM.OrderID }) |
+                    @Html.ActionLink("Details", "Detail", new { id = orderVM.OrderID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="col-md-6">
+    @Html.ActionLink("Add New Order", "CustomerDetail", null, new { @class = "btn btn-primary" })
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#orderTable tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

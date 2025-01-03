@@ -1,0 +1,78 @@
+﻿@model LogiticsManagment.ViewModels.WarehouseViewModel
+
+@{
+    ViewBag.Title = "Add Package to Warehouse Inventory";
+}
+
+<h2>Add Package to Warehouse Inventory</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <h4>Add New Package</h4>
+    <hr />
+
+    @using (Html.BeginForm("AddPackage", "Warehouse", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.WarehouseInventory.warehouse_id)
+
+        <div class="form-group">
+            <label for="Package_id" class="control-label col-md-2">Package ID</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WarehouseInventory.package_id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WarehouseInventory.package_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Category" class="control-label col-md-2">Category</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.WarehouseInventory.category, new SelectList(new[]
+                {
+                    "Standard",
+                    "Express",
+                    "IntracityStandard",
+                    "IntracityExpress"
+                }), "Select Category", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.WarehouseInventory.category, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Shelf Number" class="control-label col-md-2">Shelf Number</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WarehouseInventory.shelf_no, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WarehouseInventory.shelf_no, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Row Number" class="control-label col-md-2">Row Number</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WarehouseInventory.row_no, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WarehouseInventory.row_no, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Column Number" class="control-label col-md-2">Column Number</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WarehouseInventory.column_no, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WarehouseInventory.column_no, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Package" class="btn btn-primary" />
+            </div>
+        </div>
+        <!-- Other form fields -->
+    }
+
+
+</div>
+}
+
+@section scripts {
+    <!-- Add any scripts here if needed -->
+}

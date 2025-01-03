@@ -1,0 +1,115 @@
+﻿@model LogiticsManagment.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<h2>Order Details</h2>
+
+<h3>Customer Details</h3>
+<table class="table">
+    <tr>
+        <th>Customer ID</th>
+        <td>@Model.Customer.customer_id</td>
+    </tr>
+    <tr>
+        <th>Customer Name</th>
+        <td>@Model.Customer.customer_name</td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td>@Model.Customer.address</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>@Model.Customer.email</td>
+    </tr>
+    <tr>
+        <th>Phone Number</th>
+        <td>@Model.Customer.phone_number</td>
+    </tr>
+</table>
+
+<h3>Shipment Details</h3>
+<table class="table">
+    <tr>
+        <th>Shipment ID</th>
+        <td>@Model.Shipment.shipment_id</td>
+    </tr>
+    <tr>
+        <th>Destination Address</th>
+        <td>@Model.Shipment.destination_address</td>
+    </tr>
+    <tr>
+        <th>Estimated Delivery Date</th>
+        <td>@Model.Shipment.estimated_delivery_date</td>
+    </tr>
+    <tr>
+        <th>Actual Delivery Date</th>
+        <td>@Model.Shipment.actual_delivery_date</td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>@Model.Shipment.Status</td>
+    </tr>
+    <tr>
+        <th>Delivery Method</th>
+        <td>@Model.Shipment.delivery_method</td>
+    </tr>
+    <tr>
+        <th>Destination City</th>
+        <td>@Model.Shipment.destination_city_name</td>
+    </tr>
+</table>
+
+<h3>Package Details</h3>
+<table class="table">
+    <tr>
+        <th>Package ID</th>
+        <td>@Model.Package.package_id</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.Package.description</td>
+    </tr>
+    <tr>
+        <th>Weight</th>
+        <td>@Model.Package.weight</td>
+    </tr>
+    <tr>
+        <th>Length</th>
+        <td>@Model.Package.length</td>
+    </tr>
+    <tr>
+        <th>Width</th>
+        <td>@Model.Package.width</td>
+    </tr>
+    <tr>
+        <th>Height</th>
+        <td>@Model.Package.height</td>
+    </tr>
+    <tr>
+        <th>Fragile</th>
+        <td>@Model.Package.fragile</td>
+    </tr>
+</table>
+
+<h3>Payment Details</h3>
+<table class="table">
+    <tr>
+        <th>Payment ID</th>
+        <td>@Model.Payment.payment_id</td>
+    </tr>
+    <tr>
+        <th>Amount</th>
+        <td>@Model.Payment.amount</td>
+    </tr>
+    <tr>
+        <th>Payment Method</th>
+        <td>@Model.Payment.payment_method</td>
+    </tr>
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "ListOrders")
+</p>

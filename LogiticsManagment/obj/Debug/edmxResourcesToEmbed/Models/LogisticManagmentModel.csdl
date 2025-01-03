@@ -1,0 +1,557 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LogisticManagmentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="city_id" />
+    </Key>
+    <Property Name="city_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="city_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="latitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
+    <Property Name="longitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
+    <NavigationProperty Name="Shipments" Relationship="Self.FK__Shipment__destin__1CBC4616" FromRole="City" ToRole="Shipment" />
+    <NavigationProperty Name="Shipments1" Relationship="Self.FK__Shipment__source__1DB06A4F" FromRole="City" ToRole="Shipment" />
+    <NavigationProperty Name="Vehicles" Relationship="Self.FK__Vehicle__vehicle__236943A5" FromRole="City" ToRole="Vehicle" />
+    <NavigationProperty Name="Warehouses" Relationship="Self.FK__Warehouse__city___07C12930" FromRole="City" ToRole="Warehouse" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customer_name" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="address" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+    <Property Name="phone_number" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Order__customer___72C60C4A" FromRole="Customer" ToRole="Order" />
+    <NavigationProperty Name="Shipments" Relationship="Self.FK__Shipment__custom__1BC821DD" FromRole="Customer" ToRole="Shipment" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="order_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="delivery_charges" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Order__customer___72C60C4A" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="Packages" Relationship="Self.FK__Package__order_i__1332DBDC" FromRole="Order" ToRole="Package" />
+    <NavigationProperty Name="Payments" Relationship="Self.FK__Payment__order_i__7F2BE32F" FromRole="Order" ToRole="Payment" />
+  </EntityType>
+  <EntityType Name="Package">
+    <Key>
+      <PropertyRef Name="package_id" />
+    </Key>
+    <Property Name="package_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="warehouse_id" Type="Int32" />
+    <Property Name="order_id" Type="Int32" />
+    <Property Name="description" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+    <Property Name="weight" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="length" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="width" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="height" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="fragile" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK__Package__order_i__1332DBDC" FromRole="Package" ToRole="Order" />
+    <NavigationProperty Name="Warehouse" Relationship="Self.FK__Package__warehou__123EB7A3" FromRole="Package" ToRole="Warehouse" />
+    <NavigationProperty Name="Shipments" Relationship="Self.FK__Shipment__packag__1AD3FDA4" FromRole="Package" ToRole="Shipment" />
+    <NavigationProperty Name="warehouse_inventory" Relationship="Self.FK__warehouse__packa__17036CC0" FromRole="Package" ToRole="warehouse_inventory" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="payment_id" />
+    </Key>
+    <Property Name="payment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_id" Type="Int32" />
+    <Property Name="amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="payment_method" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK__Payment__order_i__7F2BE32F" FromRole="Payment" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Rate">
+    <Key>
+      <PropertyRef Name="rate_id" />
+    </Key>
+    <Property Name="rate_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="delivery_method" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="weight_range_start" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="weight_range_end" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="rate_per_km" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Route">
+    <Key>
+      <PropertyRef Name="route_id" />
+    </Key>
+    <Property Name="route_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="route_link" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="VehicleRoutes" Relationship="Self.FK__VehicleRo__route__29221CFB" FromRole="Route" ToRole="VehicleRoute" />
+  </EntityType>
+  <EntityType Name="Shipment">
+    <Key>
+      <PropertyRef Name="shipment_id" />
+    </Key>
+    <Property Name="shipment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="package_id" Type="Int32" />
+    <Property Name="customer_id" Type="Int32" />
+    <Property Name="destination_address" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="destination_city_id" Type="Int32" />
+    <Property Name="source_city_id" Type="Int32" />
+    <Property Name="shipment_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="estimated_delivery_date" Type="DateTime" Precision="0" />
+    <Property Name="actual_delivery_date" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Shipment__destin__1CBC4616" FromRole="Shipment" ToRole="City" />
+    <NavigationProperty Name="City1" Relationship="Self.FK__Shipment__source__1DB06A4F" FromRole="Shipment" ToRole="City" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Shipment__custom__1BC821DD" FromRole="Shipment" ToRole="Customer" />
+    <NavigationProperty Name="Package" Relationship="Self.FK__Shipment__packag__1AD3FDA4" FromRole="Shipment" ToRole="Package" />
+    <NavigationProperty Name="ShipmentVehicles" Relationship="Self.FK__ShipmentV__shipm__2BFE89A6" FromRole="Shipment" ToRole="ShipmentVehicle" />
+    <Property Name="delivery_method" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ShipmentVehicle">
+    <Key>
+      <PropertyRef Name="shipment_id" />
+      <PropertyRef Name="vehicle_id" />
+    </Key>
+    <Property Name="shipment_id" Type="Int32" Nullable="false" />
+    <Property Name="vehicle_id" Type="Int32" Nullable="false" />
+    <Property Name="load_date" Type="DateTime" Precision="0" />
+    <Property Name="unload_date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Shipment" Relationship="Self.FK__ShipmentV__shipm__2BFE89A6" FromRole="ShipmentVehicle" ToRole="Shipment" />
+    <NavigationProperty Name="Vehicle" Relationship="Self.FK__ShipmentV__vehic__2CF2ADDF" FromRole="ShipmentVehicle" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Vehicle">
+    <Key>
+      <PropertyRef Name="vehicle_id" />
+    </Key>
+    <Property Name="vehicle_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vehicle_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="capacity" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="vehicle_city_id" Type="Int32" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Vehicle__vehicle__236943A5" FromRole="Vehicle" ToRole="City" />
+    <NavigationProperty Name="ShipmentVehicles" Relationship="Self.FK__ShipmentV__vehic__2CF2ADDF" FromRole="Vehicle" ToRole="ShipmentVehicle" />
+    <NavigationProperty Name="VehicleRoutes" Relationship="Self.FK__VehicleRo__vehic__282DF8C2" FromRole="Vehicle" ToRole="VehicleRoute" />
+  </EntityType>
+  <EntityType Name="VehicleRoute">
+    <Key>
+      <PropertyRef Name="vehicle_route_id" />
+    </Key>
+    <Property Name="vehicle_route_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vehicle_id" Type="Int32" />
+    <Property Name="route_id" Type="Int32" />
+    <Property Name="assignment_date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Route" Relationship="Self.FK__VehicleRo__route__29221CFB" FromRole="VehicleRoute" ToRole="Route" />
+    <NavigationProperty Name="Vehicle" Relationship="Self.FK__VehicleRo__vehic__282DF8C2" FromRole="VehicleRoute" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="Warehouse">
+    <Key>
+      <PropertyRef Name="warehouse_id" />
+    </Key>
+    <Property Name="warehouse_id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="city_id" Type="Int32" />
+    <Property Name="capacity" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="available_space" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Warehouse__city___07C12930" FromRole="Warehouse" ToRole="City" />
+    <NavigationProperty Name="Packages" Relationship="Self.FK__Package__warehou__123EB7A3" FromRole="Warehouse" ToRole="Package" />
+  </EntityType>
+  <EntityType Name="warehouse_inventory">
+    <Key>
+      <PropertyRef Name="package_id" />
+    </Key>
+    <Property Name="package_id" Type="Int32" Nullable="false" />
+    <Property Name="category" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+    <Property Name="shelf_no" Type="Int32" Nullable="false" />
+    <Property Name="row_no" Type="Int32" Nullable="false" />
+    <Property Name="column_no" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Package" Relationship="Self.FK__warehouse__packa__17036CC0" FromRole="warehouse_inventory" ToRole="Package" />
+  </EntityType>
+  <Association Name="FK__Shipment__destin__1CBC4616">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Shipment" Type="Self.Shipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="city_id" />
+      </Principal>
+      <Dependent Role="Shipment">
+        <PropertyRef Name="destination_city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shipment__source__1DB06A4F">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Shipment" Type="Self.Shipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="city_id" />
+      </Principal>
+      <Dependent Role="Shipment">
+        <PropertyRef Name="source_city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Vehicle__vehicle__236943A5">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="city_id" />
+      </Principal>
+      <Dependent Role="Vehicle">
+        <PropertyRef Name="vehicle_city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Warehouse__city___07C12930">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="city_id" />
+      </Principal>
+      <Dependent Role="Warehouse">
+        <PropertyRef Name="city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__customer___72C60C4A">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shipment__custom__1BC821DD">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Shipment" Type="Self.Shipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="Shipment">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Package__order_i__1332DBDC">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="Package" Type="Self.Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="Package">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Payment__order_i__7F2BE32F">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Package__warehou__123EB7A3">
+    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+    <End Role="Package" Type="Self.Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="warehouse_id" />
+      </Principal>
+      <Dependent Role="Package">
+        <PropertyRef Name="warehouse_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shipment__packag__1AD3FDA4">
+    <End Role="Package" Type="Self.Package" Multiplicity="0..1" />
+    <End Role="Shipment" Type="Self.Shipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="package_id" />
+      </Principal>
+      <Dependent Role="Shipment">
+        <PropertyRef Name="package_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__warehouse__packa__17036CC0">
+    <End Role="Package" Type="Self.Package" Multiplicity="1" />
+    <End Role="warehouse_inventory" Type="Self.warehouse_inventory" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="package_id" />
+      </Principal>
+      <Dependent Role="warehouse_inventory">
+        <PropertyRef Name="package_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VehicleRo__route__29221CFB">
+    <End Role="Route" Type="Self.Route" Multiplicity="0..1" />
+    <End Role="VehicleRoute" Type="Self.VehicleRoute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Route">
+        <PropertyRef Name="route_id" />
+      </Principal>
+      <Dependent Role="VehicleRoute">
+        <PropertyRef Name="route_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ShipmentV__shipm__2BFE89A6">
+    <End Role="Shipment" Type="Self.Shipment" Multiplicity="1" />
+    <End Role="ShipmentVehicle" Type="Self.ShipmentVehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shipment">
+        <PropertyRef Name="shipment_id" />
+      </Principal>
+      <Dependent Role="ShipmentVehicle">
+        <PropertyRef Name="shipment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ShipmentV__vehic__2CF2ADDF">
+    <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="1" />
+    <End Role="ShipmentVehicle" Type="Self.ShipmentVehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vehicle">
+        <PropertyRef Name="vehicle_id" />
+      </Principal>
+      <Dependent Role="ShipmentVehicle">
+        <PropertyRef Name="vehicle_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VehicleRo__vehic__282DF8C2">
+    <End Role="Vehicle" Type="Self.Vehicle" Multiplicity="0..1" />
+    <End Role="VehicleRoute" Type="Self.VehicleRoute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vehicle">
+        <PropertyRef Name="vehicle_id" />
+      </Principal>
+      <Dependent Role="VehicleRoute">
+        <PropertyRef Name="vehicle_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LogisticManagmentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Packages" EntityType="Self.Package" />
+    <EntitySet Name="Payments" EntityType="Self.Payment" />
+    <EntitySet Name="Rates" EntityType="Self.Rate" />
+    <EntitySet Name="Routes" EntityType="Self.Route" />
+    <EntitySet Name="Shipments" EntityType="Self.Shipment" />
+    <EntitySet Name="ShipmentVehicles" EntityType="Self.ShipmentVehicle" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Vehicles" EntityType="Self.Vehicle" />
+    <EntitySet Name="VehicleRoutes" EntityType="Self.VehicleRoute" />
+    <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+    <EntitySet Name="warehouse_inventory" EntityType="Self.warehouse_inventory" />
+    <AssociationSet Name="FK__Shipment__destin__1CBC4616" Association="Self.FK__Shipment__destin__1CBC4616">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Shipment" EntitySet="Shipments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shipment__source__1DB06A4F" Association="Self.FK__Shipment__source__1DB06A4F">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Shipment" EntitySet="Shipments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Vehicle__vehicle__236943A5" Association="Self.FK__Vehicle__vehicle__236943A5">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Vehicle" EntitySet="Vehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Warehouse__city___07C12930" Association="Self.FK__Warehouse__city___07C12930">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Warehouse" EntitySet="Warehouses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__customer___72C60C4A" Association="Self.FK__Order__customer___72C60C4A">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shipment__custom__1BC821DD" Association="Self.FK__Shipment__custom__1BC821DD">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Shipment" EntitySet="Shipments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Package__order_i__1332DBDC" Association="Self.FK__Package__order_i__1332DBDC">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="Package" EntitySet="Packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Payment__order_i__7F2BE32F" Association="Self.FK__Payment__order_i__7F2BE32F">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="Payment" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Package__warehou__123EB7A3" Association="Self.FK__Package__warehou__123EB7A3">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="Package" EntitySet="Packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shipment__packag__1AD3FDA4" Association="Self.FK__Shipment__packag__1AD3FDA4">
+      <End Role="Package" EntitySet="Packages" />
+      <End Role="Shipment" EntitySet="Shipments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__warehouse__packa__17036CC0" Association="Self.FK__warehouse__packa__17036CC0">
+      <End Role="Package" EntitySet="Packages" />
+      <End Role="warehouse_inventory" EntitySet="warehouse_inventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VehicleRo__route__29221CFB" Association="Self.FK__VehicleRo__route__29221CFB">
+      <End Role="Route" EntitySet="Routes" />
+      <End Role="VehicleRoute" EntitySet="VehicleRoutes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ShipmentV__shipm__2BFE89A6" Association="Self.FK__ShipmentV__shipm__2BFE89A6">
+      <End Role="Shipment" EntitySet="Shipments" />
+      <End Role="ShipmentVehicle" EntitySet="ShipmentVehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ShipmentV__vehic__2CF2ADDF" Association="Self.FK__ShipmentV__vehic__2CF2ADDF">
+      <End Role="Vehicle" EntitySet="Vehicles" />
+      <End Role="ShipmentVehicle" EntitySet="ShipmentVehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VehicleRo__vehic__282DF8C2" Association="Self.FK__VehicleRo__vehic__282DF8C2">
+      <End Role="Vehicle" EntitySet="Vehicles" />
+      <End Role="VehicleRoute" EntitySet="VehicleRoutes" />
+    </AssociationSet>
+    <FunctionImport Name="AddPackage">
+      <Parameter Name="warehouse_id" Mode="In" Type="Int32" />
+      <Parameter Name="order_id" Mode="In" Type="Int32" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="weight" Mode="In" Type="Decimal" />
+      <Parameter Name="length" Mode="In" Type="Decimal" />
+      <Parameter Name="width" Mode="In" Type="Decimal" />
+      <Parameter Name="height" Mode="In" Type="Decimal" />
+      <Parameter Name="fragile" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="AddRoute">
+      <Parameter Name="route_link" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddShipment">
+      <Parameter Name="package_id" Mode="In" Type="Int32" />
+      <Parameter Name="customer_id" Mode="In" Type="Int32" />
+      <Parameter Name="destination_address" Mode="In" Type="String" />
+      <Parameter Name="destination_city_id" Mode="In" Type="Int32" />
+      <Parameter Name="source_city_id" Mode="In" Type="Int32" />
+      <Parameter Name="shipment_date" Mode="In" Type="DateTime" />
+      <Parameter Name="delivery_method" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddVehicle">
+      <Parameter Name="vehicle_number" Mode="In" Type="String" />
+      <Parameter Name="capacity" Mode="In" Type="Decimal" />
+      <Parameter Name="status" Mode="In" Type="String" />
+      <Parameter Name="vehicle_city_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="AddWarehouseInventory">
+      <Parameter Name="package_id" Mode="In" Type="Int32" />
+      <Parameter Name="Category" Mode="In" Type="String" />
+      <Parameter Name="ShelfNo" Mode="In" Type="Int32" />
+      <Parameter Name="RowNo" Mode="In" Type="Int32" />
+      <Parameter Name="ColumnNo" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="AssignRouteToVehicle">
+      <Parameter Name="vehicle_id" Mode="In" Type="Int32" />
+      <Parameter Name="route_id" Mode="In" Type="Int32" />
+      <Parameter Name="assignment_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="CalculateCityDistance">
+      <Parameter Name="OriginCityID" Mode="In" Type="Int32" />
+      <Parameter Name="DestinationCityID" Mode="In" Type="Int32" />
+      <Parameter Name="Distance" Mode="InOut" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="LoadShipmentOntoVehicle">
+      <Parameter Name="shipment_id" Mode="In" Type="Int32" />
+      <Parameter Name="vehicle_id" Mode="In" Type="Int32" />
+      <Parameter Name="load_date" Mode="In" Type="DateTime" />
+      <Parameter Name="status" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="RemovePackage">
+      <Parameter Name="package_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(LogisticManagmentModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(LogisticManagmentModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="UnloadShipmentFromVehicle">
+      <Parameter Name="shipment_id" Mode="In" Type="Int32" />
+      <Parameter Name="vehicle_id" Mode="In" Type="Int32" />
+      <Parameter Name="unload_date" Mode="In" Type="DateTime" />
+      <Parameter Name="status" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateShipmentStatus">
+      <Parameter Name="shipment_id" Mode="In" Type="Int32" />
+      <Parameter Name="status" Mode="In" Type="String" />
+      <Parameter Name="actual_delivery_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="CalculateEstimatedDeliveryDate" ReturnType="Collection(DateTime)">
+      <Parameter Name="origin_city" Mode="In" Type="String" />
+      <Parameter Name="destination_city" Mode="In" Type="String" />
+      <Parameter Name="delivery_method" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CalculateCharges" ReturnType="Collection(Decimal)">
+      <Parameter Name="origin_city_id" Mode="In" Type="Int32" />
+      <Parameter Name="destination_city_id" Mode="In" Type="Int32" />
+      <Parameter Name="weight" Mode="In" Type="Decimal" />
+      <Parameter Name="delivery_method" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CalculateChargess" ReturnType="Collection(Decimal)">
+      <Parameter Name="origin_city_id" Mode="In" Type="Int32" />
+      <Parameter Name="destination_city_id" Mode="In" Type="Int32" />
+      <Parameter Name="weight" Mode="In" Type="Decimal" />
+      <Parameter Name="delivery_method" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<LogiticsManagment.Models.ShipmentVehicle>
+
+@{
+    ViewBag.Title = "Details for Vehicle";
+}
+
+<h2>Details for Vehicle</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+    </div>
+</div>
+
+<table id="shipmentTable" class="table">
+    <thead>
+        <tr>
+            <th>Shipment ID</th>
+            <th>Load Date</th>
+            <th>Unload Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shipmentVehicle in Model)
+        {
+            <tr>
+                <td>@shipmentVehicle.shipment_id</td>
+                <td>@(shipmentVehicle.load_date.HasValue ? shipmentVehicle.load_date.Value.ToShortDateString() : "N/A")</td>
+                <td>@(shipmentVehicle.unload_date.HasValue ? shipmentVehicle.unload_date.Value.ToShortDateString() : "N/A")</td>
+                <td>
+                    @Html.ActionLink("UnloadShipment", "UnloadShipment", "Vehicle", new { id = @ViewBag.VehicleId, shipmentId = shipmentVehicle.shipment_id }, new { @class = "btn btn-warning btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="col-md-6">
+    <button class="btn btn-success btn-sm" onclick="location.href='@Url.Action("LoadShipment", "Vehicle", new { id = @ViewBag.VehicleId })'">Load Shipment</button>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "ListVehicles")
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#shipmentTable tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

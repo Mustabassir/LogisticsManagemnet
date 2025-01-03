@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Warehouse Management";
+}
+
+<h2>Warehouse Management</h2>
+
+<div>
+    <h3>Manage Warehouses</h3>
+    @Html.ActionLink("View List of Warehouses", "ListWarehouses", "Warehouse", new { area = "" }, new { @class = "btn btn-primary" })
+</div>
+
+<div>
+    <h3>Add Package to Warehouse</h3>
+    @Html.ActionLink("Add Package", "AddPackage", "Warehouse", new { area = "" }, new { @class = "btn btn-primary" })
+</div>

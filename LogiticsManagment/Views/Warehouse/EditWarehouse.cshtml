@@ -1,0 +1,45 @@
+﻿@model LogiticsManagment.ViewModels.WarehouseViewModel
+
+@{
+    ViewBag.Title = "Edit Warehouse";
+}
+
+<h2>Edit Warehouse</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Warehouse</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Warehouse.warehouse_id)
+    <div class="form-group">
+        <label for="Warehouse Name" class="control-label col-md-2">Warehouse Name</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Warehouse.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Warehouse.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        <div class="form-group">
+            <label for="Warehouse Location" class="control-label col-md-2">Warehouse Name</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Warehouse.location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Warehouse.location, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="City Name" class="control-label col-md-2">Warehouse Name</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Warehouse.city_name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Warehouse.city_name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
